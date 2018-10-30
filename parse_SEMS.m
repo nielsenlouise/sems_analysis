@@ -1,6 +1,6 @@
 function [ bin_concentrations, bin_diameters, start_times, end_times ] = parse_SEMS( fname )
 % parse_SEMS parses a SEMS .dat file into a matrix and extracts relevant info
-    %   Inputs: fname, name of the dat file
+    %   Inputs:  fname, name of the dat file
     %   Outputs: bin concentrations, NUM_ROWSxNUM_BINS Matrix containing particle concentration data
     %            bin_diameters, 1xNUM_BINS Vec containing diameter of each of our bins
     %            start_times, NUM_ROWSx1 Vec containing start time of each collection
