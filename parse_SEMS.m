@@ -30,7 +30,6 @@ function [ bin_concentrations, bin_diameters, start_times, end_times ] = parse_S
     % except we've seperated the start and end time columns into 3 seperate
     % columns each.
     raw_data = reshape(data, NUM_COLS, [])';
-    data_matrix = raw_data;
 
     % % STEP 2: Extract Relevant Info
     
