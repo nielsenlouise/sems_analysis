@@ -1,28 +1,33 @@
-function [ bin_concentrations, bin_diameters, start_times, end_times ] = parse_SEMS( fname )
+ function [ bin_concentrations, bin_diameters, start_times, end_times ] = parse_SEMS( fname )
 % parse_SEMS parses a SEMS .dat file into a matrix and extracts relevant info
-    %   Inputs:  fname, name of the dat file
-    %   Outputs: bin concentrations, NUM_ROWSxNUM_BINS Matrix containing particle concentration data
-    %            bin_diameters, 1xNUM_BINS Vec containing diameter of each of our bins
-    %            start_times, NUM_ROWSx1 Vec containing start time of each collection
-    %            end_times, NUM_ROWSx1 Vec containing end time of each collection
+%   Inputs:  fname, name of the dat file
+%   Outputs: bin concentrations, NUM_ROWSxNUM_BINS Matrix containing particle concentration data
+%            bin_diameters, 1xNUM_BINS Vec containing diameter of each of our bins
+%            start_times, NUM_ROWSx1 Vec containing start time of each collection
+%            end_times, NUM_ROWSx1 Vec containing end time of each collection
    
     format long g
 
     % % STEP 1: Extract Raw Data
     fid = fopen(fname,'r');
+    % Get number of bins
+    num_bins_array = textscan(fid,'#Num Bins: %u',1,'delimiter','\n', 'headerlines',11);
+    num_bins = num_bins_array{1};
     % Read in file as a 1xN vector
     datacell = textscan(fid, '%f', 'CommentStyle','#', 'Delimiter', ': \t' );
     fclose(fid);
     data = datacell{1};
 
-    % There are 71 columns in the data file. However, we split each of the 
-    % two date columns into 3 columns, which gives us 75.  
-    NUM_COLS = 75;
+    % There are 21 columns in the data file before the bin diameters and
+    % concentrations columns. However, we split each of the two date 
+    % columns into 3 columns, which gives us 25. Each of bin diameters and
+    % concentrations has cardinality num_bins.
+    NUM_COLS = 25 + 2*num_bins;
     disp(['Scanned ', num2str(size(data,1) / NUM_COLS), ' rows of data.']);
-
+    
     if mod(size(data, 1), NUM_COLS) ~= 0
         disp('Error! Data has an unexpected number of columns. ')
-        disp('Please update NUM_COLS in parse_SEMS and try again.')
+        disp('This data file may have a different number of state columns.')
         return;
     end
 
@@ -33,11 +38,11 @@ function [ bin_concentrations, bin_diameters, start_times, end_times ] = parse_S
 
     % % STEP 2: Extract Relevant Info
     
-    % Note: we are assumming that the columns are always the same. If we
-    % Use more or less bins, then this parsing will need to change.
-    
-    % Extract bin diameters
-    bin_diameters = raw_data(1,26:50);
+    % raw_data contains the following (by column):
+    %   Cols 1:6 - time information
+    %   Cols 7:25 - state data (we don't care about)
+    %   Cols 26:(26+num_bins-1) - bin diameters
+    %   Cols (26+num_bins):NUM_COLS - bin concentrations
     
     % Extract Start and End Times
     start_dates = raw_data(:,1);
@@ -54,9 +59,12 @@ function [ bin_concentrations, bin_diameters, start_times, end_times ] = parse_S
     
     parsed_end_dates = datetime(num2str(end_dates), 'InputFormat', 'yyMMdd'); 
     end_times = parsed_end_dates + hours(end_hours) + minutes(end_minutes) + seconds(end_seconds);
+        
+    % Extract bin diameters
+    bin_diameters = raw_data(1,26:(25+num_bins));
     
     % Extract Bin Concentrations
-    bin_concentrations = raw_data(:, 51:NUM_COLS);
+    bin_concentrations = raw_data(:, (26 + num_bins):NUM_COLS);
     
 
 end
