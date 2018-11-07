@@ -21,9 +21,6 @@
         unparsed_bits(end) = [];
     end
 
-    % preallocate a matrix of arbitraty datetimes 
-    times = linspace(datetime(2000, 01, 01, 00, 00, 00), datetime(200, 01, 10), length(unparsed_bits));
-
     % get a linear array of times
     for i=1:length(unparsed_bits)
         if strncmpi(unparsed_bits{i}, 'Open at', 7)

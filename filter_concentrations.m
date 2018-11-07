@@ -7,15 +7,15 @@ function [filtered_concentrations, filtered_start_times, filtered_end_times ] = 
 %   Outputs: filtered_concentrations: contains particle concentration data occurring in ranges specified by parse_switch_out
 %            filtered_start_times: filtered_concentrations: contains start times occurring in ranges specified by parse_switch_out
 %            filtered_end_times: filtered_concentrations: contains end times occurring in ranges specified by parse_switch_out
-
+    
     [filtered_concentrations, filtered_start_times, filtered_end_times] = get_entries_middle(parse_switch_out(1,1), parse_switch_out(1,2), bin_concentrations, start_times, end_times);
     % For each time range in parse_switch_out,
     for i = 2:size(parse_switch_out)
         % Get the data from that range and add it to our data vectors
         [window_concs, window_starts, window_ends] = get_entries_middle(parse_switch_out(i,1), parse_switch_out(i,2), bin_concentrations, start_times, end_times);
-        filtered_concentrations = filtered_concentrations + window_concs;
-        filtered_start_times = filtered_start_times + window_starts;
-        filtered_end_times = filtered_end_times + window_ends;
+        filtered_concentrations = [filtered_concentrations; window_concs];
+        filtered_start_times = [filtered_start_times; window_starts];
+        filtered_end_times = [filtered_end_times; window_ends];
     end
 end
 
