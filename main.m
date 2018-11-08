@@ -35,4 +35,5 @@ v2_ranges(:,1) = v2_ranges(:,1) + seconds(40);
 
 % plot(v1_starts,  sum(v1_concentrations, 2), v2_starts, sum(v2_concentrations, 2))
 
-plot_particle_count(v1_starts, v1_concentrations, v2_starts, v2_concentrations, bin_diameters);
+% plot_particle_count(v1_starts, v1_concentrations, v2_starts, v2_concentrations, bin_diameters);
+plot_bananaplot(v1_starts, v1_concentrations, v2_starts, v2_concentrations, bin_diameters);
