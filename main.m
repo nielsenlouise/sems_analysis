@@ -38,16 +38,19 @@ split_timepoint = datetime('28-Oct-2018 10:45:00');
 % plot(v1_starts,  sum(v1_concentrations, 2), v2_starts, sum(v2_concentrations, 2))
 
 %% Plot average concentrations
-subplot(2,1,1)
-plt_avg_concentrations(bin_diameters,v1_concentrations_before, v2_concentrations_before)
-legend('Indoor','Outdoor')
-axis([-inf inf 0 7000])
-subplot(2,1,2)
-plt_avg_concentrations(bin_diameters,v1_concentrations_after, v2_concentrations_after)
-axis([-inf inf 0 7000])
+% subplot(2,1,1)
+% plt_avg_concentrations(bin_diameters,v1_concentrations_before, v2_concentrations_before)
+% legend('Indoor','Outdoor')
+% axis([-inf inf 0 7000])
+% subplot(2,1,2)
+% plt_avg_concentrations(bin_diameters,v1_concentrations_after, v2_concentrations_after)
+% axis([-inf inf 0 7000])
 
 %% Plot pcolor plots
 % plot_bananaplot(v1_starts, v1_concentrations, v2_starts, v2_concentrations, bin_diameters);
 
 %% Plot particle count plots
 % plot_particle_count(v1_starts, v1_concentrations, v2_starts, v2_concentrations, bin_diameters);
+
+%% Plot particle ratios
+plot_particle_ratios(v1_starts, v1_concentrations, v2_concentrations, bin_diameters);
