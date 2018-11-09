@@ -14,7 +14,8 @@ function plot_particle_count(start_times1, concentrations1, start_times2, concen
     particle_ct2 = (concentrations2 * bin_widths');
     
     plot(start_times1, particle_ct1, start_times2, particle_ct2)
+    title('Outdoor vs Indoor Concentration')
     xlabel('Time')
     ylabel('Particles per cm^3')
-    legend('Valve 1','Valve 2')
+    legend('Indoor Concentration','Outdoor Concentration')
 end
