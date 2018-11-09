@@ -3,6 +3,9 @@ function plot_bananaplot(start_times1, concentrations1, start_times2, concentrat
     subplot(2,1,1)
     h(1) = pcolor(datenum(start_times1), bin_diameters, concentrations1')
     
+    % TODO: FIX
+%     colormap(jet(concentrations1))
+    
     shading interp
     set(gca,'yscale','log')
     set(gca,'YTick',[10,20,50,100,200,500,800,1000])
@@ -10,14 +13,18 @@ function plot_bananaplot(start_times1, concentrations1, start_times2, concentrat
     
     axis([-inf 737364.277175926 -inf inf])
     
+%     line([737361.447916667 737361.447916667; 0 500]);
+    
     h(2) = colorbar
     
-    sums = sum(concentrations1);
+    sums = sum(concentrations2);
     index = find(sums==max(sums));
-    maxvector = concentrations1(:,index);
+    maxvector = concentrations2(:,index);
     mn = mean(maxvector);
     stdev2 = std(maxvector);
-    maxconc = mn + 2*stdev2
+    maxconc = mn + stdev2
+    
+%     maxconc = 200000
     
     caxis([0 maxconc])
     set(gca,'YTickLabel',{'10','20','50','100','200','500','800','1000'})
@@ -44,14 +51,14 @@ function plot_bananaplot(start_times1, concentrations1, start_times2, concentrat
     
     h2(2) = colorbar
     
-    sums2 = sum(concentrations2);
-    index2 = find(sums2==max(sums2));
-    maxvector2 = concentrations2(:,index2);
-    mn2 = mean(maxvector2);
-    stdev2 = std(maxvector2);
-    maxconc2 = mn + 2*stdev2
+%     sums2 = sum(concentrations2);
+%     index2 = find(sums2==max(sums2));
+%     maxvector2 = concentrations2(:,index2);
+%     mn2 = mean(maxvector2);
+%     stdev2 = std(maxvector2);
+%     maxconc2 = mn + 2*stdev2
     
-    caxis([0 maxconc2])
+    caxis([0 maxconc])
     set(gca,'YTickLabel',{'10','20','50','100','200','500','800','1000'})
     mintime = min(datenum(start_times2));
     maxtime = max(datenum(start_times2));

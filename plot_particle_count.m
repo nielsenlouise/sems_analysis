@@ -8,10 +8,10 @@ function plot_particle_count(start_times1, concentrations1, start_times2, concen
 % plotted against time.
 
     % Assuming bin diameters are maxes, and the minimum scan size is 0,
-    bin_widths = diff([0 bin_diameters]);
+    bin_widths = diff(log([6 bin_diameters]/1000));
     
-    particle_ct1 = (concentrations1 * bin_widths')./1000;
-    particle_ct2 = (concentrations2 * bin_widths')./1000;
+    particle_ct1 = (concentrations1 * bin_widths');
+    particle_ct2 = (concentrations2 * bin_widths');
     
     plot(start_times1, particle_ct1, start_times2, particle_ct2)
     xlabel('Time')
